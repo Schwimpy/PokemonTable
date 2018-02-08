@@ -68,7 +68,7 @@ public class ListDataActivity extends AppCompatActivity{
                     editScreenIntent.putExtra("name", name);
                     startActivity(editScreenIntent);
                 } else {
-                    toastMessage("No ID associated with that name");
+                    toastMessage("No ID associated with that Pokemon");
                 }
             }
         });

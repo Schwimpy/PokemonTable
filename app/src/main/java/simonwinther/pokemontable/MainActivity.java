@@ -13,33 +13,36 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     DatabaseHelper mDatabasehelper;
-    private Button btnAdd, btnViewData;
-    private EditText editText;
+    private Button btnAddPokemon, btnViewPokemons;
+    private EditText editTextPokemonName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editText = findViewById(R.id.editText);
-        btnAdd = findViewById(R.id.btnAdd);
-        btnViewData = findViewById(R.id.btwView);
+        editTextPokemonName = findViewById(R.id.editTextPokemonName);
+
+        btnAddPokemon = findViewById(R.id.btnAddPokemon);
+        btnViewPokemons = findViewById(R.id.btnViewPokemons);
+
         mDatabasehelper = new DatabaseHelper(this);
 
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        btnAddPokemon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String newEntry = editText.getText().toString();
-                if (editText.length() != 0) {
-                    AddData(newEntry);
-                    editText.setText("");
+                String pokemonName = editTextPokemonName.getText().toString();
+                if (editTextPokemonName.length() != 0) {
+                    AddData(pokemonName);
+                    editTextPokemonName.setText("");
                 } else {
-                    toastMessage("You must put something in the text field!");
+                    toastMessage("You must write a name for the Pokemon!");
                 }
             }
         });
 
-        btnViewData.setOnClickListener(new View.OnClickListener(){
+        btnViewPokemons.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListDataActivity.class);
@@ -48,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void AddData(String newEntry) {
-        boolean insertData = mDatabasehelper.addData(newEntry);
+    public void AddData(String pokemonName) {
+        boolean insertData = mDatabasehelper.addData(pokemonName);
 
         if (insertData) {
-            toastMessage("Data Succesfully Inserted");
+            toastMessage("Pokemon succesfully added");
         } else {
-            toastMessage("Something went wrong");
+            toastMessage("Pokemon not added");
         }
     }
 

@@ -50,7 +50,7 @@ public class EditDataActivity extends AppCompatActivity{
                 String item = editable_item.getText().toString();
                 if (!item.equals("")){
                     mDatabaseHelper.updatedName(item, selectedID, selectedName);
-                    toastMessage("Name Changed");
+                    toastMessage("Pokemon name Changed");
                 } else {
                     toastMessage("You must enter a name");
                 }
@@ -62,7 +62,7 @@ public class EditDataActivity extends AppCompatActivity{
             public void onClick(View view) {
                 mDatabaseHelper.deleteName(selectedID, selectedName);
                 editable_item.setText("");
-                toastMessage("removed from database");
+                toastMessage("Pokemon removed from database");
             }
         });
 

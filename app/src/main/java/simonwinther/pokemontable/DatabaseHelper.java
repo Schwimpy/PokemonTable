@@ -18,8 +18,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "pokemons";
     private static final String KEY_ID = "ID";
     private static final String KEY_NAME = "name";
-    private static final String KEY_HEIGHT = "height";
-    private static final String KEY_WEIGHT = "weight";
 
     public DatabaseHelper (Context context) {
         super(context, TABLE_NAME, null, 1);
@@ -28,9 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_NAME + " TEXT,"
-                + KEY_HEIGHT + " TEXT,"
-                + KEY_WEIGHT + " TEXT" + ")";
+                + KEY_NAME + " TEXT," + ")";
         db.execSQL(createTable);
 
     }
@@ -41,12 +37,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String item) {
+    public boolean addData(String pokemonName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_NAME, item);
+        contentValues.put(KEY_NAME, pokemonName);
 
-        Log.d(TAG, "addData: adding " + item + " to " + TABLE_NAME);
+        Log.d(TAG, "addData: adding " + pokemonName + " to " + TABLE_NAME);
 
         long result = db.insert(TABLE_NAME, null, contentValues);
 
