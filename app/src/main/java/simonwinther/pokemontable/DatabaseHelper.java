@@ -26,15 +26,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TABLE_NAME + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + KEY_NAME + " TEXT," + ")";
+                + KEY_NAME + " TEXT)";
         db.execSQL(createTable);
+        db.execSQL("Create table user(name text primary key, password text )");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS user");
         onCreate(db);
+    }
+
+    public boolean insert (String name, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", name);
+        contentValues.put("password", password);
+        long ins = db.insert("user", null, contentValues);
+        if (ins==-1) return false;
+        else return true;
+    }
+
+    public Boolean checkName(String name) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from user where name=?", new String[]{name});
+        if (cursor.getCount()>0) return false;
+        else return true;
+    }
+
+    public Boolean namePlusPassword (String name, String password) {
+        SQLiteDatabase db  = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from user where name=? and password=?" , new String[]{name,password});
+        if (cursor.getCount()>0)  return true;
+        else return false;
+
     }
 
     public boolean addData(String pokemonName) {
