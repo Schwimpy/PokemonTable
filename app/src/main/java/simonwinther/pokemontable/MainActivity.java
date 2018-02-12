@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     DatabaseHelper mDatabasehelper;
-    private Button btnAddPokemon, btnViewPokemons;
+    private Button btnAddPokemon, btnViewPokemons, btnLogOut;
     private EditText editTextPokemonName;
 
 
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnAddPokemon = findViewById(R.id.btnAddPokemon);
         btnViewPokemons = findViewById(R.id.btnViewPokemons);
+        btnLogOut = findViewById(R.id.logOutButton);
 
         mDatabasehelper = new DatabaseHelper(this);
 
@@ -49,13 +50,22 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
     }
 
     public void AddData(String pokemonName) {
         boolean insertData = mDatabasehelper.addData(pokemonName);
 
         if (insertData) {
-            toastMessage("Pokemon succesfully added");
+            toastMessage("Pokemon added");
         } else {
             toastMessage("Pokemon not added");
         }
